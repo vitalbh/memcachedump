@@ -117,7 +117,7 @@ func getListKeys(conn getStats, keyCh chan keyInfo) {
 	for _, bucket := range items {
 		result, err := conn.Stats(fmt.Sprintf("cachedump %d %d", bucket.key, bucket.size))
 		if err != nil {
-			log.Fatal(err)
+			continue
 		}
 		lines := bytes.Split(result, []byte("\n"))
 		//keys := make([]string, 0, len(lines))
