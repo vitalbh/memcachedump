@@ -9,6 +9,8 @@ import (
 	youtubeMemcache "github.com/youtube/vitess/go/memcache"
 )
 
+var NotFoundErr = errors.New("Not found")
+
 // Memcache struct
 type Memcache struct {
 	conn *youtubeMemcache.Connection
@@ -79,7 +81,7 @@ func (mc *Memcache) Get(key keyInfo) (Kv, error) {
 	for _, ret := range results {
 		return Kv{ret.Key, ret.Flags, exptime, ret.Cas, ret.Value}, nil
 	}
-	return Kv{}, errors.New("Not found")
+	return Kv{}, NotFoundErr 
 }
 
 // Stats get status

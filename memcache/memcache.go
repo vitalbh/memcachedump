@@ -69,8 +69,10 @@ func PrintDump(address string, dialTimeout time.Duration) error {
 	}
 	for key := range keyCh {
 		result, err := getConn.Get(key)
+		if err == NotFoundErr {
+			continue
+		}
 		if err != nil {
-			//return fmt.Errorf("key:%v,err:%v", key, err)
 			log.Printf("key:%v,err:%v", key, err)
 			return nil
 		}
