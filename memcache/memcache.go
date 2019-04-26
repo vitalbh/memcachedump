@@ -25,8 +25,10 @@ func Restore(address string, dialTimeout time.Duration) error {
 		} else if err != nil {
 			return err
 		}
-		if err = conn.Set(kv); err != nil {
-			return err
+
+		err = conn.Set(kv)
+		if err != nil {
+			log.Println(err)
 		}
 	}
 }
