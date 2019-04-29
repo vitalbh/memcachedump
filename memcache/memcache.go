@@ -23,7 +23,7 @@ func Restore(address string, dialTimeout time.Duration) error {
 		if err = dec.Decode(&kv); err == io.EOF {
 			return nil
 		} else if err != nil {
-			return err
+			continue
 		}
 
 		err = conn.Set(kv)
@@ -75,12 +75,11 @@ func PrintDump(address string, dialTimeout time.Duration) error {
 			continue
 		}
 		if err != nil {
-			log.Printf("key:%v,err:%v", key, err)
-			return nil
+			continue
 		}
 		b, err := json.Marshal(result)
 		if err != nil {
-			log.Fatal(err)
+			continue
 		}
 		fmt.Printf("%s\n", b)
 	}
